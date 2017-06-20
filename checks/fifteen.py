@@ -3,28 +3,10 @@ import sys
 import subprocess
 import pexpect
 
-
 sys.path.append(os.getcwd())
 from check50 import File, TestCase, Error, check
 
 class Fifteen(TestCase):
-
-#     var invalidtests = {
-#     'invalid-start' : {
-#     	'desc' : '3x3 board, from start try to move tile 2, 4, 5, 6, 7, 8',
-#     	'inputs' : ["2", "4", "5", "6", "7", "8"]
-#     },
-#
-#     'invalid-center' : {
-#     	'desc' : '3x3 board, move blank left (tile 1) then up (tile 4), then try to move tiles 1, 2, 6, 8',
-#     	'inputs' : [1, 4, 1, 2, 6, 8]
-#     },
-#
-#     'invalid-3-2' : {
-#     	'desc' : '3x3 board, move blank up (tile 3), then try tile 2',
-#     	'inputs' : [3, 2]
-#     },
-# }
 
     @check()
     def exists(self):
@@ -139,13 +121,19 @@ class Fifteen(TestCase):
             except pexpect.TIMEOUT:
                 raise Error()
 
-    # @check("compiles")
-    # def invalid-center(self):
-    #     """3x3 board, from start try to move tile 2, 4, 5, 6, 7, 8"""
-    #     child = self.spawn("./fifteen 3")
-    #     for move in ["2", "4", "5", "6", "7", "8"]:
-    #         child.stdin(move)
-    #         try:
-    #             child.child.expect('Illegal move.', timeout=3)
-    #         except pexpect.TIMEOUT:
-    #             raise Error()
+    @check("compiles")
+    def invalid_center(self):
+        """3x3 board, move blank left (tile 1) then up (tile 4), then try to move tiles 1, 2, 6, 8"""
+        child = self.spawn("./fifteen 3")
+        for move in ["2", "4"]:
+            child.stdin(move)
+            try:
+                child.child.expect('Tile to move:', timeout=3)
+            except pexpect.TIMEOUT:
+                raise Error()
+            for move in ["5", "6", "7", "8"]:
+                child.stdin(move)
+            try:
+                child.child.expect('Illegal move.', timeout=3)
+            except pexpect.TIMEOUT:
+                raise Error()
