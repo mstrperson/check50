@@ -3,14 +3,14 @@ import re
 import sys
 
 sys.path.append(os.getcwd())
-from check50 import Test, check
+from check50 import TestCase, check
 
-class Water(Test):
+class Water(TestCase):
 
     @check()
     def exists(self):
         """water.c exists."""
-        super().exists("water.c")
+        super(Water, self).exists("water.c")
     
     @check("exists")
     def compiles(self):

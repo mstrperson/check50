@@ -2,14 +2,14 @@ import os
 import sys
 
 sys.path.append(os.getcwd())
-from check50 import Test, check
+from check50 import TestCase, check
 
-class Credit(Test):
+class Credit(TestCase):
     
     @check()
     def exists(self):
         """credit.c exists."""
-        super().exists("credit.c")
+        super(Credit, self).exists("credit.c")
     
     @check("exists")
     def compiles(self):

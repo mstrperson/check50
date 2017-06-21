@@ -3,14 +3,14 @@ import re
 import sys
 
 sys.path.append(os.getcwd())
-from check50 import Test, Error, check
+from check50 import TestCase, Error, check
 
-class Greedy(Test):
+class Greedy(TestCase):
     
     @check()
     def exists(self):
         """greedy.c exists."""
-        super().exists("greedy.c")
+        super(Greedy, self).exists("greedy.c")
     
     @check("exists")
     def compiles(self):
