@@ -24,17 +24,17 @@ class Water(TestCase):
 
     @check("compiles")
     def test2(self):
-        """2 minute equals 24 bottles."""
+        """2 minutes equals 24 bottles."""
         self.spawn("./water").stdin("2").stdout("^.*24.*$", 24)
 
     @check("compiles")
     def test5(self):
-        """5 minute equals 60 bottles."""
+        """5 minutes equals 60 bottles."""
         self.spawn("./water").stdin("5").stdout("^.*60.*$", 60).exit(0)
 
     @check("compiles")
     def test10(self):
-        """10 minute equals 120 bottles."""
+        """10 minutes equals 120 bottles."""
         self.spawn("./water").stdin("10").stdout("^.*120.*$", 120).exit(0)
 
     @check("compiles")
